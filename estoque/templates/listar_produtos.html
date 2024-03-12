@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block 'title' %}Listar Produtos{% endblock  %}
+
+{% block 'dashboard'%}
+    <div class="container">
+        <br>
+        <br>
+        <h2>Listar Produtos</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+        <br>
+
+        <form action="{% url 'listar_produtos' %}" method="GET">
+            <div class="row">
+                <div class="col-md">
+                    <input class="form-control" type="text" name="nome" placeholder="Digite um nome para pesquisa" />
+                </div>
+
+                <div class="col-md">
+                    <input class="btn btn-success" type="submit" value="Filtrar">
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nome Produto</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                    <tr>
+                        <th>{{produto.nome}}</th>
+                        <td>{{produto.preco}}</td>
+                        <td>{{produto.quantidade}}</td>
+                        <td>
+                            <a class="btn btn-info"
+                                href="{% url 'visualizar_produto' produto.id %}"
+                                title="Excluir">Editar
+                            </a>
+                            <a class="btn btn-danger cursor-pointer"
+                                href="{% url 'excluir_produto' produto.id %}"
+                                title="Excluir">x
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+        <a class="btn btn-info" href="{% url 'cadastrar_produto' %}">Voltar</a>
+    </div>
+{% endblock %}

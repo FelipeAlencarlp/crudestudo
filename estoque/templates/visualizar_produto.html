@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block 'title' %}Editar Produto{% endblock  %}
+
+{% block 'dashboard'%}
+    <div class="container">
+        <br>
+        <br>
+        <h2>Editar produto: {{ data.nome }}</h2>
+        <form action="{% url 'editar_produto' data.id %}" method="POST">{% csrf_token %}
+            <label>Nome produto:</label>
+            <input class="form-control" type="text" name="nome" value="{{data.nome}}" />
+            <br>
+            <label>Preço:</label>
+            <input class="form-control" type="text" name="preco" value="{{data.preco}}" />
+            <br>
+            <label>Quantidade:</label>
+            <input class="form-control" type="number" name="quantidade" value="{{data.quantidade}}" />
+            <br>
+
+            <input class="btn btn-success" type="submit" value="Editar" />
+        </form>
+        <br>
+
+        <a class="btn btn-info" href="{% url 'listar_produtos' %}">Voltar</a>
+    </div>
+{% endblock %}
