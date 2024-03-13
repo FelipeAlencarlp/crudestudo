@@ -45,11 +45,11 @@
                         <td>{{produto.quantidade}}</td>
                         <td>
                             <a class="btn btn-info"
-                                href="{% url 'visualizar_produto' produto.id %}"
+                                href="{% url 'visualizar_produto' produto.slug %}"
                                 title="Excluir">Editar
                             </a>
                             <a class="btn btn-danger cursor-pointer"
-                                href="{% url 'excluir_produto' produto.id %}"
+                                href="{% url 'excluir_produto' produto.slug %}"
                                 title="Excluir">x
                             </a>
                         </td>

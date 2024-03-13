@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Produto
+from django.urls import reverse
 
 
 def cadastrar_produto(request):
@@ -35,32 +36,32 @@ def listar_produtos(request):
         return render(request, 'listar_produtos.html', {'produtos': produtos})
 
 
-def visualizar_produto(request, id):
+def visualizar_produto(request, slug):
     if request.method == "GET":
-        produto = Produto.objects.get(id=id)
+        produto = Produto.objects.get(slug=slug)
         data = produto.__dict__
 
         return render(request, 'visualizar_produto.html', {'data': data})
 
 
-def editar_produto(request, id):
+def editar_produto(request, slug):
     nome = request.POST.get('nome')
     preco = request.POST.get('preco')
     quantidade = request.POST.get('quantidade')
 
-    produto = get_object_or_404(Produto, id=id)
+    produto = get_object_or_404(Produto, slug=slug)
 
     produto.nome = nome
     produto.preco = preco
     produto.quantidade = quantidade
     produto.save()
 
-    return redirect(listar_produtos)
+    return redirect(reverse('listar_produtos'))
 
 
-def excluir_produto(request, id):
-    produto = get_object_or_404(Produto, id=id)
+def excluir_produto(request, slug):
+    produto = get_object_or_404(Produto, slug=slug)
     produto.delete()
 
     messages.add_message(request, messages.SUCCESS, 'Produto deletado com sucesso')
-    return redirect(listar_produtos)
+    return redirect(reverse('listar_produtos'))
